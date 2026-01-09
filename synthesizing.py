@@ -1,14 +1,5 @@
 from PIL import Image
-import os
-
-input_folder = "inputs"
-output_folder = "outputs"
-
-def in_path(filename):
-    return os.path.join(input_folder, filename)
-
-def out_path(filename):
-    return os.path.join(output_folder, filename)
+from utils import in_path, out_path
 
 def triangle(size):
     #white: (255, 255, 255)
