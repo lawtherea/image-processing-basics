@@ -20,6 +20,7 @@ def triangle(size):
     return img
 t = triangle(700)
 # t.show()
+t.save(out_path("triangle.png"))
 
 def french_flag(height):
     ratio = 3 / 2 #width to height ratio
@@ -39,6 +40,7 @@ def french_flag(height):
     return img
 french_flag = french_flag(700)
 # french_flag.show()
+french_flag.save(out_path("french_flag.png"))
 
 def japanese_flag(height):
     width = 3 * height // 2  #width to height ratio 3:2
@@ -56,6 +58,7 @@ def japanese_flag(height):
     return img
 japanese_flag = japanese_flag(700)
 # japanese_flag.show()
+japanese_flag.save(out_path("japanese_flag.png"))
 
 def brazilian_flag(height):
     width = 20 * height // 14  #width to height ratio 20:14
@@ -93,6 +96,7 @@ def brazilian_flag(height):
     return img
 brazilian_flag = brazilian_flag(700)
 # brazilian_flag.show()
+brazilian_flag.save(out_path("brazilian_flag.png"))
 
 if __name__ == "__main__":
     brazilian_flag.show()
