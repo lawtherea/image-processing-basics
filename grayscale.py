@@ -30,5 +30,7 @@ def grayscale_weighted(colored_img):
 
 if __name__ == "__main__":
     cat = Image.open(in_path("cutecat.jpg"))
-    gray_cat = grayscale_weighted(cat)
+    gray_cat_weighted = grayscale_weighted(cat)
+    gray_cat_weighted.save(out_path("cutecat_grayscale_weighted_manual.jpg"))
+    gray_cat = grayscale(cat)
     gray_cat.save(out_path("cutecat_grayscale_manual.jpg"))
