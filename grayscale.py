@@ -1,5 +1,5 @@
 from PIL import Image
-from utils import in_path, out_path
+from utils import in_path, out_path, show_vertical, show_horizontal
 
 # img = Image.open(in_path("cutedog.jpg")).convert("L")  #convert image to grayscale
 # img.save(in_path("cutedog_grayscale.jpg"))
@@ -29,8 +29,9 @@ def grayscale_weighted(colored_img):
     return img
 
 if __name__ == "__main__":
-    cat = Image.open(in_path("cutecat.jpg"))
-    gray_cat_weighted = grayscale_weighted(cat)
-    gray_cat_weighted.save(out_path("cutecat_grayscale_weighted_manual.jpg"))
-    gray_cat = grayscale(cat)
-    gray_cat.save(out_path("cutecat_grayscale_manual.jpg"))
+    img = Image.open(in_path("Lenna.png"))
+    gray_img_weighted = grayscale_weighted(img)
+    gray_img_weighted.save(out_path("Lenna_grayscale_weighted_manual.jpg"))
+    gray_img = grayscale(img)
+    gray_img.save(out_path("Lenna_grayscale_manual.jpg"))
+    show_horizontal(gray_img_weighted, gray_img)
