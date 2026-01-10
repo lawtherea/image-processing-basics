@@ -1,11 +1,5 @@
-from utils import in_path, out_path
+from utils import in_path, out_path, show_vertical
 from PIL import Image, ImageFilter
-import numpy as np
-
-# compare two images side by side
-def show_vertical(img1,img2):
-    im = Image.fromarray(np.hstack((np.array(img1), np.array(img2))))
-    im.show()
 
 def blur_image(input_image):
     return input_image.filter(ImageFilter.GaussianBlur(radius=5))
