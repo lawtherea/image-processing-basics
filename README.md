@@ -9,3 +9,4 @@ This repository is intended for studying image processing, with small exercises 
 - `grayscale.py` — manual implementation of grayscale conversion
 - `filters.py` — applying some filters on images
 - `box_blur_filter.py` — applying box blur filter
+- `sobel_filter.py` — manual implementation of vertical and horizontal sobel filter
