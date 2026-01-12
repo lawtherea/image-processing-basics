@@ -1,34 +1,52 @@
 from PIL import Image, ImageFilter
 from utils import in_path, out_path, show_horizontal, show_horizontal_three, show_horizontal_four
+from math import sqrt
 
 # Sobel filter implementation. Sobel has two components: horizontal and vertical. The final edge magnitude is computed from both.
 
-def show_vertical_edges(filename, offset=0):
-    img = Image.open(in_path(filename)).convert("L")  # Convert to grayscale. Color images are not suitable for edge detection because edges are defined in terms of intensity changes.
-    filtered_img_v = img.filter(ImageFilter.Kernel((3, 3), [-1, 0, 1,
-                                                        -2, 0, 2,
-                                                        -1, 0, 1], 1, offset))
-    # Since there's no sobel filter in PIL, we define the kernel manually.
+def show_edges(filename, direction='x', offset=0): # offset is added to the result to avoid negative values
+    original_img = Image.open(in_path(filename)).convert('L')  # Convert to grayscale for edge detection
 
-    # show_horizontal(img, filtered_img_v)
-    filtered_img_v.save(out_path("{}_vsobel_{}.png".format(filename[:filename.index(".")], offset)))
-    return filtered_img_v
+    X_sobel = ImageFilter.Kernel((3, 3),
+                                 [-1, 0, 1,
+                                  -2, 0, 2,
+                                  -1, 0, 1],
+                                  1,
+                                  offset
+                                  )
+    
+    Y_sobel = ImageFilter.Kernel((3, 3),
+                                 [1, 2, 1,
+                                  0, 0, 0,
+                                  -1, -2, -1],
+                                  1,
+                                  offset
+                                  )
+    
+    if direction == 'x':
+        filtered_img = original_img.filter(X_sobel)
+        show_horizontal(original_img, filtered_img)
+    elif direction == 'y':
+        filtered_img = original_img.filter(Y_sobel)
+        show_horizontal(original_img, filtered_img)
+    elif direction == 'both':
+        vsobel = original_img.filter(X_sobel)
+        hsobel = original_img.filter(Y_sobel)
+        w, h = original_img.size
+        filtered_img = Image.new('L', (w, h)) # Create a gray image to store the magnitude
 
-# Doing the same for horizontal edges
-def show_horizontal_edges(filename, offset=0):
-    img = Image.open(in_path(filename)).convert("L")
-    filtered_img_h = img.filter(ImageFilter.Kernel((3, 3), [1, 2, 1,
-                                                        0, 0, 0,
-                                                       -1, -2, -1], 1, offset))
+        for i in range(w):
+            for j in range(h):
+                # Compute the magnitude of the gradient
+                value = int(sqrt(vsobel.getpixel((i, j))**2 + hsobel.getpixel((i, j))**2)) # vertical and horizontal components sum
+                value = min(value, 255) # because pixel values must be in [0, 255], if greater than 255, set to 255
+                filtered_img.putpixel((i, j), value) # set the pixel value that just calculated in the new image
+        
+        show_horizontal_four(original_img, vsobel, hsobel, filtered_img)
+    else:
+        raise ValueError("Direction must be 'x', 'y', or 'both'.")
 
-    # show_horizontal(img, filtered_img_h)
-    filtered_img_h.save(out_path("{}_hsobel_{}.png".format(filename[:filename.index(".")], offset)))
-    return filtered_img_h
+    # filtered_img.save(out_path("{}_{}sobel_{}.jpg".format(filename[:filename.index(".")], direction, offset)))
 
 if __name__ == "__main__":
-    original = Image.open(in_path('cutedog.jpg')).convert("L")
-
-    hsobel = show_horizontal_edges('cutedog.jpg')
-    vsobel = show_vertical_edges('cutedog.jpg')
-
-    show_horizontal_three(original, vsobel, hsobel)
+    show_edges('cutedog.jpg', 'both', 0)
