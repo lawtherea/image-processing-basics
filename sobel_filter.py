@@ -3,7 +3,6 @@ from utils import in_path, out_path, show_horizontal, show_horizontal_three, sho
 from math import sqrt
 
 # Sobel filter implementation. Sobel has two components: horizontal and vertical. The final edge magnitude is computed from both.
-
 def show_edges(filename, direction='x', offset=0): # offset is added to the result to avoid negative values
     original_img = Image.open(in_path(filename)).convert('L')  # Convert to grayscale for edge detection
 
@@ -33,7 +32,7 @@ def show_edges(filename, direction='x', offset=0): # offset is added to the resu
         vsobel = original_img.filter(X_sobel)
         hsobel = original_img.filter(Y_sobel)
         w, h = original_img.size
-        filtered_img = Image.new('L', (w, h)) # Create a gray image to store the magnitude
+        filtered_img = Image.new('L', (w, h)) # Create a gray image with the same dimensions as original_img to store the magnitude
 
         for i in range(w):
             for j in range(h):
