@@ -46,7 +46,7 @@ def show_edges(filename, direction='x', offset=0): # offset is added to the resu
     else:
         raise ValueError("Direction must be 'x', 'y', or 'both'.")
 
-    # filtered_img.save(out_path("{}_{}sobel_{}.jpg".format(filename[:filename.index(".")], direction, offset)))
+    filtered_img.save(out_path("{}_{}sobel_{}.jpg".format(filename[:filename.index(".")], direction, offset)))
 
 if __name__ == "__main__":
     show_edges('cutedog.jpg', 'both', 0)
